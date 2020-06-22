@@ -1,4 +1,4 @@
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE  1
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -26,134 +26,184 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
   00000021            00010 Duty_Off    EQU     0x21
                       00011     
                       00012   CODE 0x00
-                      00013   
-                      00014 
-                      00015             
-                      00016    
-                      00017 ;---------FRECUENCIA DEL OSCILADOR------------------
-                      00018 ;seleccion del oscilador interno como fuente de reloj del CPU
+                      00013 ;---------FRECUENCIA DEL OSCILADOR------------------
+                      00014 ;seleccion del oscilador interno como fuente de reloj del CPU
 Warning[203]: Found opcode in column 1. (BSF)
-000000 82D3           00019 BSF OSCCON,SCS1,0 ;
+000000 82D3           00015 BSF OSCCON,SCS1,0 ;
 Warning[203]: Found opcode in column 1. (BSF)
-000002 80D3           00020 BSF OSCCON,SCS0,0 ; 
-                      00021 ;configuro el PLL para 8MHz de fosc al cpu 
+000002 80D3           00016 BSF OSCCON,SCS0,0 ; 
+                      00017 ;configuro el PLL para 8MHz de fosc al cpu 
 Warning[203]: Found opcode in column 1. (BSF)
-000004 8CD3           00022 BSF OSCCON, IRCF2,0
+000004 8CD3           00018 BSF OSCCON, IRCF2,0
 Warning[203]: Found opcode in column 1. (BSF)
-000006 8AD3           00023 BSF OSCCON, IRCF1,0
+000006 8AD3           00019 BSF OSCCON, IRCF1,0
 Warning[203]: Found opcode in column 1. (BSF)
-000008 88D3           00024 BSF OSCCON, IRCF0,0
-                      00025 ;--------DEFINO PUERTOS--------------
-                      00026 ;CONFIGURO PUERTO B0 Y B1 COMO SALIDA
+000008 88D3           00020 BSF OSCCON, IRCF0,0
+                      00021 ;--------DEFINO PUERTOS--------------
+                      00022 ;CONFIGURO PUERTO B0 Y B1 COMO SALIDA
 Warning[203]: Found opcode in column 1. (CLRF)
-00000A 6A81           00027 CLRF PORTB          ;limpia puerto B
+00000A 6A81           00023 CLRF PORTB          ;limpia puerto B
 Warning[203]: Found opcode in column 1. (MOVLW)
-00000C 0E00           00028 MOVLW B'00000000'   ;mueve 0 a w
+00000C 0E00           00024 MOVLW B'00000000'   ;mueve 0 a w
 Warning[203]: Found opcode in column 1. (MOVWF)
-00000E 6E93           00029 MOVWF TRISB,ACCESS  ;mueve w a TRISB
+00000E 6E93           00025 MOVWF TRISB,ACCESS  ;mueve w a TRISB
 Warning[203]: Found opcode in column 1. (MOVLW)
-000010 0E00           00030 MOVLW B'00000000'   ;mueve 0 a w
+000010 0E00           00026 MOVLW B'00000000'   ;mueve 0 a w
 Warning[203]: Found opcode in column 1. (MOVWF)
-000012 6E8A           00031 MOVWF LATB,ACCESS   ;mueve w a LATB
-                      00032   
-                      00033  ;configuro puerto D como salida
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE  2
+000012 6E8A           00027 MOVWF LATB,ACCESS   ;mueve w a LATB
+                      00028   
+                      00029  ;configuro puerto D como salida
+Warning[203]: Found opcode in column 1. (CLRF)
+000014 6A83           00030 CLRF PORTD          ;limpia el puerto D
+Warning[203]: Found opcode in column 1. (MOVLW)
+000016 0E00           00031 MOVLW B'00000000'   ;mueve 0 a W
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
+Warning[203]: Found opcode in column 1. (MOVWF)
+000018 6E95           00032 MOVWF TRISD,ACCESS  ;mueve W a TRISD 
+Warning[203]: Found opcode in column 1. (MOVLW)
+00001A 0E00           00033 MOVLW B'00000000'   ;mueve 0 a W
+Warning[203]: Found opcode in column 1. (MOVWF)
+00001C 6E8C           00034 MOVWF LATD,ACCESS   ;mueve W a LATD
+                      00035 ;Set CCP1 pin como salida puerto C como salida
 Warning[203]: Found opcode in column 1. (CLRF)
-000014 6A83           00034 CLRF PORTD          ;limpia el puerto D
+00001E 6A94           00036 CLRF TRISC
+                      00037   ;----------configuracion de ADC----
+                      00038 
+Warning[203]: Found opcode in column 1. (MOVWF)
+000020 6E00           00039 MOVWF B'00000000'  ;CONFIGURO EL CANAL 0 AN0
+Warning[203]: Found opcode in column 1. (MOVWF)
+000022 6EC2           00040 MOVWF ADCON0
+                      00041  
 Warning[203]: Found opcode in column 1. (MOVLW)
-000016 0E00           00035 MOVLW B'00000000'   ;mueve 0 a W
-Warning[203]: Found opcode in column 1. (MOVWF)
-000018 6E95           00036 MOVWF TRISD,ACCESS  ;mueve W a TRISD 
-Warning[203]: Found opcode in column 1. (MOVLW)
-00001A 0E00           00037 MOVLW B'00000000'   ;mueve 0 a W
-Warning[203]: Found opcode in column 1. (MOVWF)
-00001C 6E8C           00038 MOVWF LATD,ACCESS   ;mueve W a LATD
-                      00039 ;Set CCP1 pin como salida puerto C como salida
-Warning[203]: Found opcode in column 1. (CLRF)
-00001E 6A94           00040 CLRF TRISC
-                      00041   ;----------configuracion de ADC----
-                      00042 
-Warning[203]: Found opcode in column 1. (MOVWF)
-000020 6E00           00043 MOVWF B'00000000'  ;CONFIGURO EL CANAL 0 AN0
-Warning[203]: Found opcode in column 1. (MOVWF)
-000022 6EC2           00044 MOVWF ADCON0
-                      00045  
-Warning[203]: Found opcode in column 1. (MOVLW)
-000024 0E0E           00046 MOVLW B'00001110'  ;CONFIGURA EL VOTAJE DE REFERENCIA IGUAL AL DE LA ALIMENTACION PIC Y CONFIGURA EL PUE
+000024 0E0E           00042 MOVLW B'00001110'  ;CONFIGURA EL VOTAJE DE REFERENCIA IGUAL AL DE LA ALIMENTACION PIC Y CONFIGURA EL PUE
                             RTO AN0 COMO ENTRADA ANALOGICA
 Warning[203]: Found opcode in column 1. (MOVWF)
-000026 6EC1           00047 MOVWF ADCON1 
-                      00048 
+000026 6EC1           00043 MOVWF ADCON1 
+                      00044 
 Warning[203]: Found opcode in column 1. (MOVLW)
-000028 0E3A           00049 MOVLW B'00111010'  ;ACTIVA JUSTIFICACION A LA IZQUIERDA -- TIMEPO DE ADQUISICION 20 TAD -- TAD=fOSC/32 =
+000028 0E3A           00045 MOVLW B'00111010'  ;ACTIVA JUSTIFICACION A LA IZQUIERDA -- TIMEPO DE ADQUISICION 20 TAD -- TAD=fOSC/32 =
                             8MHZ/32
 Warning[203]: Found opcode in column 1. (MOVWF)
-00002A 6EC0           00050 MOVWF ADCON2
-                      00051 
+00002A 6EC0           00046 MOVWF ADCON2
+                      00047 
 Warning[203]: Found opcode in column 1. (MOVLW)
-00002C 0E01           00052 MOVLW B'00000001'  ;ENCIENDE EL ADC
+00002C 0E01           00048 MOVLW B'00000001'  ;ENCIENDE EL ADC
 Warning[203]: Found opcode in column 1. (MOVWF)
-00002E 6EC2           00053 MOVWF ADCON0
-                      00054 ;-------------CONFIGURACION DE PWM --------------------------  
-                      00055   ;load period value in PR2 register 
-000030 0EFF           00056     MOVLW .255 ; periodo del pwm 1024*tosc    tosc=1/2Mhz frecPWM 7812.5Hz
-000032 6ECB           00057     MOVWF PR2, ACCESS 
-                      00058 ;No pre-scalar, timer2 is off
-000034 0E00           00059     MOVLW B'00000000'
-000036 6ECA           00060     MOVWF T2CON
-                      00061 ;set PWM mode and  decimal value for PWM [10 bits]
-000038 0E0C           00062     MOVLW 0x0C ;configura PWM como solo una salida en el puerto CCP1/RC2/PA1
-00003A 6EBD           00063     MOVWF CCP1CON
-                      00064     
-00003C                00065 MAIN:
-                      00066    ;----INICIA ADC-------
-00003C 0E03           00067    MOVLW B'00000011'; ENCIENDE EL ADC Y COLOCA EL BIT DE CONVERSION EN PROGRESO
-00003E 6EC2           00068    MOVWF ADCON0
-000040                00069 LOOP1:
-000040 0E02           00070    MOVLW B'00000010'
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE  3
+00002E 6EC2           00049 MOVWF ADCON0
+                      00050 ;-------------CONFIGURACION DE PWM --------------------------  
+                      00051   ;load period value in PR2 register 
+000030 0EFF           00052     MOVLW .255 ; periodo del pwm 1024*tosc    tosc=1/2Mhz frecPWM 7812.5Hz
+000032 6ECB           00053     MOVWF PR2, ACCESS 
+                      00054 ;No pre-scalar, timer2 is off
+000034 0E00           00055     MOVLW B'00000000'
+000036 6ECA           00056     MOVWF T2CON
+                      00057 ;set PWM mode and  decimal value for PWM [10 bits]
+000038 0E0C           00058     MOVLW 0x0C ;configura PWM como solo una salida en el puerto CCP1/RC2/PA1
+00003A 6EBD           00059     MOVWF CCP1CON
+                      00060     
+00003C                00061 MAIN:
+                      00062    ;----INICIA ADC-------
+00003C 0E03           00063    MOVLW B'00000011'; ENCIENDE EL ADC Y COLOCA EL BIT DE CONVERSION EN PROGRESO
+00003E 6EC2           00064    MOVWF ADCON0
+000040                00065 LOOP1:
+000040 0E02           00066    MOVLW B'00000010'
+000042 14C2           00067    ANDWF ADCON0,0,ACCESS; ESPERA A QUE TERMINE LA CONVERSION
+000044 E1??           00068    BNZ LOOP1
+                      00069    ;----TERMINA ADC------
+                      00070    ;----INICIA PWM Y SALIDAS EN LOS PUERTO
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000042 14C2           00071    ANDWF ADCON0,0,ACCESS; ESPERA A QUE TERMINE LA CONVERSION
-000044 E1??           00072    BNZ LOOP1
-                      00073    ;----TERMINA ADC------
-                      00074    ;----INICIA PWM Y SALIDAS EN LOS PUERTO
-                      00075 
-000046 50C4           00076        MOVF    ADRESH,W
-000048 6E20           00077     MOVWF   Duty_On     ;Registra el valor para el periodo
-                      00078 
-00004A 42C3           00079     RRNCF   ADRESL,F    ;Hace un corrimiento a la derecha aumentando 1
-00004C 40C3           00080     RRNCF   ADRESL,W
-                      00081   
-00004E 0B30           00082     ANDLW   B'00110000'
-000050 6E21           00083     MOVWF   Duty_Off    ;Se guarda la conversión más baja en Duty_Off
-                      00084 ;Configuración PWM
-000052 0E0C           00085     MOVLW   B'00001100'
-000054 1221           00086     IORWF   Duty_Off,F  ;Se obtienen los valores del Duty_Off
-000056 6EBD           00087     MOVWF   CCP1CON     ;Modo PWM para el CCP1
-                      00088 ;Registro PR2
-000058 0EFF           00089     MOVLW   .255
-                      00090   
-00005A 6ECB           00091     MOVWF   PR2         ;Periodo se guarda en el PR2
-                      00092 
-                      00093 ;Anchura del pulso
-00005C 5020           00094     MOVF    Duty_On,W   ;Guardamos Duty_On -> W
-00005E 6EBE           00095     MOVWF   CCPR1L      ;Y se determina concatenando en el registro CCPR1L
-                      00096 ;Prescaler
-000060 0E07           00097     MOVLW   B'00000111' ;Prescaler 1:16 y frecuencia de 20MHz 
-000062 6ECA           00098     MOVWF   T2CON
-                      00099        
-000064 EF?? F???      00100    GOTO MAIN
-                      00101   END
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE  4
+                      00071 
+000046 50C4           00072     MOVF    ADRESH,W
+000048 6E20           00073     MOVWF   Duty_On     ;Registra el valor para el periodo
+00004A 42C3           00074     RRNCF   ADRESL,F    ;Hace un corrimiento a la derecha aumentando 1
+00004C 40C3           00075     RRNCF   ADRESL,W
+00004E 0B30           00076     ANDLW   B'00110000'
+000050 6E21           00077     MOVWF   Duty_Off    ;Se guarda la conversión más baja en Duty_Off
+                      00078 ;Configuración PWM
+000052 0E0C           00079     MOVLW   B'00001100'
+000054 1221           00080     IORWF   Duty_Off,F  ;Se obtienen los valores del Duty_Off
+000056 6EBD           00081     MOVWF   CCP1CON     ;Modo PWM para el CCP1
+                      00082 ;Registro PR2
+000058 0EFF           00083     MOVLW   .255
+00005A 6ECB           00084     MOVWF   PR2         ;Periodo se guarda en el PR2
+                      00085 ;Anchura del pulso
+00005C 5020           00086     MOVF    Duty_On,W   ;Guardamos Duty_On -> W
+00005E 6EBE           00087     MOVWF   CCPR1L      ;Y se determina concatenando en el registro CCPR1L
+                      00088 ;Prescaler
+000060 0E07           00089     MOVLW   B'00000111' ;Prescaler 1:16 y frecuencia de 8MHz 
+000062 6ECA           00090     MOVWF   T2CON
+                      00091        
+000064 EF?? F???      00092    GOTO MAIN
+                      00093    
+                      00094   ;-------------------------------------Configuración del SPI al Inicio---------------------------------
+                            ----
+000068                00095 Start_SPI:
+                      00096     ; Limpiamos puertos a utilizar
+000068 6A82           00097     CLRF PORTC                              ; Limpiamos puerto C
+00006A 6A81           00098     CLRF PORTB                              ; Limpiasmo puerto B
+                      00099     ;B1 SCK
+                      00100     ;B0 (MOSI)
+                      00101     ;C7 SDO (MISO)
+                      00102     ;
+                      00103     ;Configuración del B1 SCK como salida en el puerto y RB0 SDI(MOSI) como entrada en el puerto 0
+00006C 0E01           00104     MOVLW 0x01                              ; Pasamos 0x01 al registro W, para poner a pi1 como salida y
+                             pin 0 como entrada
+00006E 6E93           00105     MOVWF TRISB, ACCESS                     ; Movemos lo que está en el registro W a TRISB
+                      00106     
+                      00107     ;Configuración del SDO(MISO) como salida en el puerto C7
+000070 6A94           00108     CLRF TRISC                              ; Definimos el registro TRISC pin 7 como salida
+000072 6AC6           00109     CLRF SSPCON1
+                      00110     ;Configuración del Registro SSPCON1
+000074 50C6           00111     MOVF SSPCON1,W,ACCESS                   ; Movemos SSPCON1 al registro W
+000076 09F0           00112     IORLW b'11110000'                       ; Configuración de control del SPI con registro SSPBUF
+000078 6EC6           00113     MOVWF SSPCON1,ACCESS                    ; Pasamos lo que está en el registro W a SSPCON1
+                      00114     
+00007A 50C6           00115     MOVF SSPCON1, W, ACCESS                 ; Movemos SSPCON1 al registro W
+00007C 0902           00116     IORLW b'00000010'                       ; Iniciamos con una frecuencia base 
+00007E 6EC6           00117     MOVWF SSPCON1, ACCESS                   ; Pasamos lo que está en el registro W a SSPCON1
+                      00118     
+                      00119     ;Configuración polaridad del reloj
+000080 98C6           00120     BCF SSPCON1,4,ACCESS                    ; El estado inactivo para el reloj es un nivel bajo
+                      00121       
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00122     ;Configuración del Registro SSPSTAT, realizar muestreo al final del tiempo de salida de datos por fl
+                            anco de bajada
+000082 8EC7           00123     BSF SSPSTAT,7,ACCESS                    ; Habilitamos muestreo por tiempo de salida de datos
+000084 8CC7           00124     BSF SSPSTAT,6,ACCESS                    ; Habilitamos flanco de bajada
+                      00125    
+                      00126     ;Configuración interrupción SPI en el registro PIE
+000086 969D           00127     BCF PIE1,3,ACCESS                       ; Ponemos el Registro PIE1 la deshabilitación de la interrup
+                            ción de MSSP
+                      00128       
+                      00129     ;Prioridad de interrupción 
+000088 6A9F           00130     CLRF IPR1                               ; Ponemos el Registro IPR1 como baja prioridad
+                      00131    
+                      00132     ;Definir configuración del SPI
+00008A 969E           00133     BCF PIR1,3,ACCESS                       ; Ponemos el Registro PIR1 en espera para transmitir o recib
+                            ir
+                      00134    
+                      00135     ;Habilitar Configuración SPI en el pin 5
+00008C 8AC6           00136     BSF SSPCON1,5,ACCESS                    ; Habilita el puerto serie y configura SCK, SDO, SDI y SS
+                      00137    
+00008E 0012           00138     RETURN                                  ; Retornamos 
+                      00139    
+                      00140   END
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE  5
 
 
 SYMBOL TABLE
@@ -212,7 +262,7 @@ BRG16                             00000003
 BRGH                              00000002
 BSR                               00000FE0
 BTOEE                             00000004
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE  5
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE  6
 
 
 SYMBOL TABLE
@@ -271,7 +321,7 @@ CM2                               00000002
 CMCON                             00000FB4
 CMIE                              00000006
 CMIF                              00000006
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE  6
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE  7
 
 
 SYMBOL TABLE
@@ -330,7 +380,7 @@ EEIE                              00000004
 EEIF                              00000004
 EEIP                              00000004
 EEPGD                             00000007
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE  7
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE  8
 
 
 SYMBOL TABLE
@@ -389,7 +439,7 @@ HLVDL1                            00000001
 HLVDL2                            00000002
 HLVDL3                            00000003
 I2C_DAT                           00000005
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE  8
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE  9
 
 
 SYMBOL TABLE
@@ -448,7 +498,7 @@ LATA4                             00000004
 LATA5                             00000005
 LATA6                             00000006
 LATB                              00000F8A
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE  9
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE 10
 
 
 SYMBOL TABLE
@@ -507,7 +557,7 @@ NOT_PD                            00000002
 NOT_POR                           00000001
 NOT_RBPU                          00000007
 NOT_RI                            00000004
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE 10
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE 11
 
 
 SYMBOL TABLE
@@ -566,7 +616,7 @@ PLUSW1                            00000FE3
 PLUSW2                            00000FDB
 POR                               00000001
 PORTA                             00000F80
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE 11
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE 12
 
 
 SYMBOL TABLE
@@ -625,7 +675,7 @@ RC2                               00000002
 RC4                               00000004
 RC5                               00000005
 RC6                               00000006
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE 12
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE 13
 
 
 SYMBOL TABLE
@@ -684,7 +734,7 @@ SPEN                              00000007
 SPP0                              00000000
 SPP1                              00000001
 SPP2                              00000002
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE 13
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE 14
 
 
 SYMBOL TABLE
@@ -736,19 +786,20 @@ SUSPND                            00000001
 SWDTE                             00000000
 SWDTEN                            00000000
 SYNC                              00000004
+Start_SPI                         00000068
 T08BIT                            00000006
 T0CKI                             00000004
 T0CON                             00000FD5
 T0CS                              00000005
 T0IE                              00000005
 T0IF                              00000002
-T0IP                              00000002
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE 14
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE 15
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+T0IP                              00000002
 T0PS0                             00000000
 T0PS1                             00000001
 T0PS2                             00000002
@@ -801,13 +852,13 @@ TMR2IE                            00000001
 TMR2IF                            00000001
 TMR2IP                            00000001
 TMR2ON                            00000002
-TMR3                              00000FB2
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE 15
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE 16
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TMR3                              00000FB2
 TMR3CS                            00000001
 TMR3H                             00000FB3
 TMR3IE                            00000001
@@ -860,13 +911,13 @@ TRISE                             00000F96
 TRISE0                            00000000
 TRISE1                            00000001
 TRISE2                            00000002
-TRMT                              00000001
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE 16
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE 17
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TRMT                              00000001
 TRNIE                             00000003
 TRNIF                             00000003
 TUN0                              00000000
@@ -919,13 +970,13 @@ URSTIE                            00000000
 URSTIF                            00000000
 USBEN                             00000003
 USBIE                             00000005
-USBIF                             00000005
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE 17
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE 18
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+USBIF                             00000005
 USBIP                             00000005
 USTAT                             00000F6C
 UTEYE                             00000007
@@ -978,13 +1029,13 @@ _CP1_ON_5L                        000000FD
 _CP2_OFF_5L                       000000FF
 _CP2_ON_5L                        000000FB
 _CP3_OFF_5L                       000000FF
-_CP3_ON_5L                        000000F7
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE 18
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE 19
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_CP3_ON_5L                        000000F7
 _CPB_OFF_5H                       000000FF
 _CPB_ON_5H                        000000BF
 _CPD_OFF_5H                       000000FF
@@ -1037,13 +1088,13 @@ _LPT1OSC_OFF_3H                   000000FB
 _LPT1OSC_ON_3H                    000000FF
 _LVP_OFF_4L                       000000FB
 _LVP_ON_4L                        000000FF
-_MCLRE_OFF_3H                     0000007F
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE 19
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE 20
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_MCLRE_OFF_3H                     0000007F
 _MCLRE_ON_3H                      000000FF
 _PBADEN_OFF_3H                    000000FD
 _PBADEN_ON_3H                     000000FF
@@ -1096,13 +1147,13 @@ _WRTC_ON_6H                       000000DF
 _WRTD_OFF_6H                      000000FF
 _WRTD_ON_6H                       0000007F
 _XINST_OFF_4L                     000000BF
-_XINST_ON_4L                      000000FF
-MPASM 5.84                          MAIN.ASM   6-21-2020  22:09:04         PAGE 20
+MPASM 5.84                          MAIN.ASM   6-21-2020  23:55:08         PAGE 21
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_XINST_ON_4L                      000000FF
 __18F4550                         00000001
 
 Errors   :     0

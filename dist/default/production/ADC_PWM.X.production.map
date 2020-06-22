@@ -1,19 +1,19 @@
 MPLINK 5.09, LINKER
-Linker Map File - Created Sun Jun 21 22:09:05 2020
+Linker Map File - Created Sun Jun 21 23:55:09 2020
 
                                  Section Info
                   Section       Type    Address   Location Size(Bytes)
                 ---------  ---------  ---------  ---------  ---------
-                    .code       code   0x000000    program   0x000068
-                   .cinit    romdata   0x000068    program   0x000002
+                    .code       code   0x000000    program   0x000090
+                   .cinit    romdata   0x000090    program   0x000002
 
 
 
                               Program Memory Usage 
                                Start         End      
                            ---------   ---------      
-                            0x000000    0x000069      
-            106 out of 33048 program addresses used, program memory utilization is 0%
+                            0x000000    0x000091      
+            146 out of 33048 program addresses used, program memory utilization is 0%
 
 
 
@@ -22,6 +22,7 @@ Linker Map File - Created Sun Jun 21 22:09:05 2020
                 ---------  ---------  ---------  --------- ---------                
                     LOOP1   0x000040    program     static C:\Users\santi\Google Drive\7sem\sistemas embebidos\PIC\ADC_PWM.X\main.asm
                      MAIN   0x00003c    program     static C:\Users\santi\Google Drive\7sem\sistemas embebidos\PIC\ADC_PWM.X\main.asm
+                Start_SPI   0x000068    program     static C:\Users\santi\Google Drive\7sem\sistemas embebidos\PIC\ADC_PWM.X\main.asm
 
 
 
@@ -30,5 +31,6 @@ Linker Map File - Created Sun Jun 21 22:09:05 2020
                 ---------  ---------  ---------  --------- ---------                
                      MAIN   0x00003c    program     static C:\Users\santi\Google Drive\7sem\sistemas embebidos\PIC\ADC_PWM.X\main.asm
                     LOOP1   0x000040    program     static C:\Users\santi\Google Drive\7sem\sistemas embebidos\PIC\ADC_PWM.X\main.asm
+                Start_SPI   0x000068    program     static C:\Users\santi\Google Drive\7sem\sistemas embebidos\PIC\ADC_PWM.X\main.asm
 
 

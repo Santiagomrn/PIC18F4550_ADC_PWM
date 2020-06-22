@@ -10,10 +10,6 @@ Duty_On	    EQU	    0x20	;Vairalbes de ancho de pulso
 Duty_Off    EQU	    0x21
     
   CODE 0x00
-  
-
-	    
-   
 ;---------FRECUENCIA DEL OSCILADOR------------------
 ;seleccion del oscilador interno como fuente de reloj del CPU
 BSF OSCCON,SCS1,0 ;
@@ -73,12 +69,10 @@ LOOP1:
    ;----TERMINA ADC------
    ;----INICIA PWM Y SALIDAS EN LOS PUERTO
 
-       MOVF    ADRESH,W
+    MOVF    ADRESH,W
     MOVWF   Duty_On	;Registra el valor para el periodo
-
     RRNCF   ADRESL,F	;Hace un corrimiento a la derecha aumentando 1
     RRNCF   ADRESL,W
-  
     ANDLW   B'00110000'
     MOVWF   Duty_Off	;Se guarda la conversión más baja en Duty_Off
 ;Configuración PWM
@@ -87,15 +81,60 @@ LOOP1:
     MOVWF   CCP1CON	;Modo PWM para el CCP1
 ;Registro PR2
     MOVLW   .255
-  
     MOVWF   PR2		;Periodo se guarda en el PR2
-
 ;Anchura del pulso
     MOVF    Duty_On,W	;Guardamos Duty_On -> W
     MOVWF   CCPR1L	;Y se determina concatenando en el registro CCPR1L
 ;Prescaler
-    MOVLW   B'00000111'	;Prescaler 1:16 y frecuencia de 20MHz 
+    MOVLW   B'00000111'	;Prescaler 1:16 y frecuencia de 8MHz 
     MOVWF   T2CON
        
    GOTO MAIN
+   
+  ;-------------------------------------Configuración del SPI al Inicio-------------------------------------
+Start_SPI:
+    ; Limpiamos puertos a utilizar
+    CLRF PORTC				    ; Limpiamos puerto C
+    CLRF PORTB				    ; Limpiasmo puerto B
+    ;B1 SCK
+    ;B0 (MOSI)
+    ;C7 SDO (MISO)
+    ;
+    ;Configuración del B1 SCK como salida en el puerto y RB0 SDI(MOSI) como entrada en el puerto 0
+    MOVLW 0x01				    ; Pasamos 0x01 al registro W, para poner a pi1 como salida y pin 0 como entrada
+    MOVWF TRISB, ACCESS			    ; Movemos lo que está en el registro W a TRISB
+    
+    ;Configuración del SDO(MISO) como salida en el puerto C7
+    CLRF TRISC			            ; Definimos el registro TRISC pin 7 como salida
+    CLRF SSPCON1
+    ;Configuración del Registro SSPCON1
+    MOVF SSPCON1,W,ACCESS		    ; Movemos SSPCON1 al registro W
+    IORLW b'11110000'			    ; Configuración de control del SPI con registro SSPBUF
+    MOVWF SSPCON1,ACCESS		    ; Pasamos lo que está en el registro W a SSPCON1
+    
+    MOVF SSPCON1, W, ACCESS		    ; Movemos SSPCON1 al registro W
+    IORLW b'00000010'			    ; Iniciamos con una frecuencia base 
+    MOVWF SSPCON1, ACCESS		    ; Pasamos lo que está en el registro W a SSPCON1
+    
+    ;Configuración polaridad del reloj
+    BCF SSPCON1,4,ACCESS		    ; El estado inactivo para el reloj es un nivel bajo
+      
+    ;Configuración del Registro SSPSTAT, realizar muestreo al final del tiempo de salida de datos por flanco de bajada
+    BSF SSPSTAT,7,ACCESS		    ; Habilitamos muestreo por tiempo de salida de datos
+    BSF SSPSTAT,6,ACCESS		    ; Habilitamos flanco de bajada
+   
+    ;Configuración interrupción SPI en el registro PIE
+    BCF PIE1,3,ACCESS			    ; Ponemos el Registro PIE1 la deshabilitación de la interrupción de MSSP
+      
+    ;Prioridad de interrupción 
+    CLRF IPR1				    ; Ponemos el Registro IPR1 como baja prioridad
+   
+    ;Definir configuración del SPI
+    BCF PIR1,3,ACCESS			    ; Ponemos el Registro PIR1 en espera para transmitir o recibir
+   
+    ;Habilitar Configuración SPI en el pin 5
+    BSF SSPCON1,5,ACCESS		    ; Habilita el puerto serie y configura SCK, SDO, SDI y SS
+   
+    RETURN				    ; Retornamos 
+   
   END
